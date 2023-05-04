@@ -29,3 +29,4 @@ This folder contains the initial synthetic data which was used in our different 
  
 ## Information
 This experiment relies on the Pods service hosted by TACC at `https://tacc.tapis.io/v3/pods`. The experiment also relies on AuraDB and Google Cloud Postgres. All of which should be accessible via free accounts. The local machine testing done was completed on a high-end laptop, but should not greatly affect the outcome. You will have to work around any issues that you might face as your situation will not match ours in the case of you running the experiment yourself.
+

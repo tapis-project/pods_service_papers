@@ -1,0 +1,31 @@
+version: "3.4"
+
+services:
+    neo4j:
+        image: notchristiangarcia/neo4j:4.4
+        environment:
+            neo4j_auth: neo4j/newPassword
+            apoc.initializer.system.1: "CREATE USER neo4j IF NOT EXISTS SET PLAINTEXT PASSWORD 'newPassword' SET PASSWORD CHANGE NOT REQUIRED"
+        ports:
+            - "7811:7687"
+        volumes:
+            - ./mounts/syntheticdata10000.csv:/var/lib/neo4j/import/syntheticdata10000.csv
+            - ./mounts/syntheticdata200000.csv:/var/lib/neo4j/import/syntheticdata200000.csv
+            - ./mounts/syntheticdata500000.csv:/var/lib/neo4j/import/syntheticdata500000.csv
+
+    paper-postgres:
+        image: postgres:15
+        environment:
+            POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: newPassword
+        ports:
+            - "7812:5432"
+        volumes:
+            - ./mounts/syntheticdata10000.csv:/syntheticdata10000.csv
+            - ./mounts/syntheticdata200000.csv:/syntheticdata200000.csv
+            - ./mounts/syntheticdata500000.csv:/syntheticdata500000.csv
+
+    paper-fastapi:
+        image: tiangolo/uvicorn-gunicorn-fastapi
+        ports:
+            - "7813:80"
